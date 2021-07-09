@@ -1,0 +1,202 @@
+## Using network mode host for the purpose of working around Redis' port mapping limitation.  For Development only, not Production!! 
+## Use -p option to connect when using host mode:
+## docker exec -it redis-1 redis-cli -c -p 7001
+## 
+## 
+## > cluster info       # This will return info about the cluster.
+## > info Replication   # This will return cluster info about the connected node.
+
+
+
+version: '3.9'
+  
+services:     
+  redis-cluster:
+    image: redis:latest
+    container_name: redis-cluster
+    command: redis-cli -a Skuirrel123 -p 7001 --cluster create 127.0.0.1:7001 127.0.0.1:7002 127.0.0.1:7003 127.0.0.1:7004 127.0.0.1:7005 127.0.0.1:7006 127.0.0.1:7007 127.0.0.1:7008 127.0.0.1:7009 --cluster-replicas 2 --cluster-yes
+    depends_on:
+      - redis-1
+      - redis-2
+      - redis-3
+      - redis-4
+      - redis-5
+      - redis-6
+      - redis-7
+      - redis-8
+      - redis-9
+    network_mode: host
+      
+
+  redis-1:
+    image: "redislabs/redismod:preview"
+    container_name: redis-1
+#    environment:
+
+    network_mode: host
+
+    entrypoint: >
+      redis-server
+      --port 7001
+      --loadmodule /usr/lib/redis/modules/redisearch.so
+      --loadmodule /usr/lib/redis/modules/rejson.so
+      --appendonly yes
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --masterauth Skuirrel123
+      --requirepass Skuirrel123
+
+
+  redis-2:
+    image: "redislabs/redismod:preview"
+    container_name: redis-2
+    #    environment:
+
+    network_mode: host
+
+    entrypoint: >
+      redis-server
+      --port 7002
+      --loadmodule /usr/lib/redis/modules/redisearch.so
+      --loadmodule /usr/lib/redis/modules/rejson.so
+      --appendonly yes
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --masterauth Skuirrel123
+      --requirepass Skuirrel123
+
+  redis-3:
+    image: "redislabs/redismod:preview"
+    container_name: redis-3
+    #    environment:
+
+    network_mode: host
+
+    entrypoint: >
+      redis-server
+      --port 7003
+      --loadmodule /usr/lib/redis/modules/redisearch.so
+      --loadmodule /usr/lib/redis/modules/rejson.so
+      --appendonly yes
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --masterauth Skuirrel123
+      --requirepass Skuirrel123
+
+  redis-4:
+    image: "redislabs/redismod:preview"
+    container_name: redis-4
+    #    environment:
+
+    network_mode: host
+
+    entrypoint: >
+      redis-server 
+      --port 7004
+      --loadmodule /usr/lib/redis/modules/redisearch.so
+      --loadmodule /usr/lib/redis/modules/rejson.so
+      --appendonly yes
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --masterauth Skuirrel123
+      --requirepass Skuirrel123
+
+  redis-5:
+    image: "redislabs/redismod:preview"
+    container_name: redis-5
+    #    environment:
+
+    network_mode: host
+
+    entrypoint: >
+      redis-server
+      --port 7005
+      --loadmodule /usr/lib/redis/modules/redisearch.so
+      --loadmodule /usr/lib/redis/modules/rejson.so
+      --appendonly yes
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --masterauth Skuirrel123
+      --requirepass Skuirrel123
+
+  redis-6:
+    image: "redislabs/redismod:preview"
+    container_name: redis-6
+    #    environment:
+
+    network_mode: host
+
+    entrypoint: >
+      redis-server 
+      --port 7006
+      --loadmodule /usr/lib/redis/modules/redisearch.so
+      --loadmodule /usr/lib/redis/modules/rejson.so
+      --appendonly yes
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --masterauth Skuirrel123
+      --requirepass Skuirrel123
+
+  redis-7:
+    image: "redislabs/redismod:preview"
+    container_name: redis-7
+    #    environment:
+
+    network_mode: host
+
+    entrypoint: >
+      redis-server 
+      --port 7007
+      --loadmodule /usr/lib/redis/modules/redisearch.so
+      --loadmodule /usr/lib/redis/modules/rejson.so
+      --appendonly yes
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --masterauth Skuirrel123
+      --requirepass Skuirrel123
+      
+  redis-8:
+    image: "redislabs/redismod:preview"
+    container_name: redis-8
+    #    environment:
+
+    network_mode: host
+
+    entrypoint: >
+      redis-server 
+      --port 7008
+      --loadmodule /usr/lib/redis/modules/redisearch.so
+      --loadmodule /usr/lib/redis/modules/rejson.so
+      --appendonly yes
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --masterauth Skuirrel123
+      --requirepass Skuirrel123
+
+  redis-9:
+    image: "redislabs/redismod:preview"
+    container_name: redis-9
+    #    environment:
+
+    network_mode: host
+
+    entrypoint: >
+      redis-server 
+      --port 7009
+      --loadmodule /usr/lib/redis/modules/redisearch.so
+      --loadmodule /usr/lib/redis/modules/rejson.so
+      --appendonly yes
+      --cluster-enabled yes
+      --cluster-config-file nodes.conf
+      --cluster-node-timeout 5000
+      --masterauth Skuirrel123
+      --requirepass Skuirrel123
+      
